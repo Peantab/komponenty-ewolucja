@@ -1,0 +1,20 @@
+*.class
+*.jar
+
+*.zip
+*.tar.gz
+
+# IntelliJ
+.idea
+*.iml
+
+# Eclipse
+.eclipse
+
+# Gradle
+build
+out
+.gradle
+
+# Maven
+target/
