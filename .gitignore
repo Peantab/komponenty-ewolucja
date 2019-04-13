@@ -1,5 +1,8 @@
 *.class
 *.jar
+!org.eclipse.equinox.console_1.3.200.v20181115-0906.jar
+!org.apache.felix.gogo.runtime_1.1.0.v20180713-1646.jar
+!org.apache.felix.gogo.shell_1.1.0.v20180713-1646.jar
 
 *.zip
 *.tar.gz

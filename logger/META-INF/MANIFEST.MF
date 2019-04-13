@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Logger
+Bundle-SymbolicName: Logger
+Bundle-Version: 1.0.0.qualifier
+Automatic-Module-Name: Logger
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: pl.edu.agh.iisg.ewolucja.logger
