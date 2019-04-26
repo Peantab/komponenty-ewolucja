@@ -20,6 +20,7 @@ org.eclipse.osgi/
 .classpath
 .project
 .settings/
+.metadata/
 build.properties
 
 # Gradle
