@@ -17,6 +17,11 @@ org.eclipse.osgi/
 
 # Eclipse
 .eclipse
+.classpath
+.project
+.settings/
+.metadata/
+build.properties
 
 # Gradle
 build
@@ -25,3 +30,8 @@ out
 
 # Maven
 target/
+
+# script
+*.bat
+
+bin/configuration/*.log
