@@ -1,7 +1,6 @@
 package pl.edu.agh.iisg.ewolucja.operators.binary;
 
 import pl.edu.agh.iisg.ewolucja.core.*;
-import pl.edu.agh.iisg.ewolucja.operators.exceptions.MissingParameterException;
 
 import java.util.Arrays;
 
