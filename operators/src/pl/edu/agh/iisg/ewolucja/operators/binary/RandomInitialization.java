@@ -9,32 +9,26 @@ public class RandomInitialization implements Operator {
 
     private int populationSize;
     private int genotypeSize;
-    private ProblemType type;
+    private ProblemType type = ProblemType.BINARY;
     private Random random =  new Random();
 
-    private RandomInitialization(int populationSize, int genotypeSize, ProblemType type) {
+    private RandomInitialization(int populationSize, int genotypeSize) {
         this.populationSize = populationSize;
         this.genotypeSize = genotypeSize;
-        this.type = type;
     }
 
     @Override
     public void initialize(Configuration configuration) {
         Integer popSize = (Integer) configuration.getParameter("population.size");
         Integer genSize = (Integer) configuration.getParameter("genotype.size");
-        ProblemType type = (ProblemType) configuration.getParameter("problem.type");
         if (popSize == null) {
             throw new MissingParameterException("population.size");
         }
         if (genSize == null) {
             throw new MissingParameterException("genotype.size");
         }
-        if (type == null) {
-            throw new MissingParameterException("problem.type");
-        }
         this.populationSize = popSize;
         this.genotypeSize = genSize;
-        this.type = type;
     }
 
     @Override

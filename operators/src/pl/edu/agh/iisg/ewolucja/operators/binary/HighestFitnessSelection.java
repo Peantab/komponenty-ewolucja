@@ -8,20 +8,15 @@ import java.util.*;
 public class HighestFitnessSelection implements Operator {
 
     private int individualsSelected;
-    private ProblemType type;
+    private ProblemType type = ProblemType.BINARY;
 
     @Override
     public void initialize(Configuration configuration) {
         Integer indSel = (Integer) configuration.getParameter("individuals.selected");
-        ProblemType type = (ProblemType) configuration.getParameter("problem.type");
         if (indSel == null) {
             throw new MissingParameterException("individuals.selected");
         }
-        if (type == null) {
-            throw new MissingParameterException("problem.type");
-        }
         this.individualsSelected = indSel;
-        this.type = type;
     }
 
     @Override

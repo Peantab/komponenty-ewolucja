@@ -7,15 +7,11 @@ import java.util.Arrays;
 
 public class SumEvaluation implements Operator {
 
-    private ProblemType type;
+    private ProblemType type = ProblemType.BINARY;
 
     @Override
     public void initialize(Configuration configuration) {
-        ProblemType type = (ProblemType) configuration.getParameter("problem.type");
-        if (type == null) {
-            throw new MissingParameterException("problem.type");
-        }
-        this.type = type;
+
     }
 
     @Override
