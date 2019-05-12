@@ -21,8 +21,36 @@
          <archive>
           <manifestFile>META-INF/MANIFEST.MF</manifestFile>
          </archive>
-       </configuration>
-     </plugin>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Export-Package>pl.edu.agh.iisg.ewolucja.logger</Export-Package>
+            <Private-Package>org.apache.http.*;org.elasticsearch.*</Private-Package>
+          </instructions>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
+  <dependencies>
+    <dependency>
+      <groupId>org.elasticsearch</groupId>
+      <artifactId>elasticsearch</artifactId>
+      <version>7.0.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.elasticsearch.client</groupId>
+      <artifactId>elasticsearch-rest-client</artifactId>
+      <version>7.0.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.elasticsearch.client</groupId>
+      <artifactId>elasticsearch-rest-high-level-client</artifactId>
+      <version>7.0.1</version>
+    </dependency>
+  </dependencies>
 </project>

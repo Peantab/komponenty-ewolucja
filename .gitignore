@@ -34,4 +34,7 @@ target/
 # script
 *.bat
 
+# ElasticSearch
+**/elasticsearch-7.0.1/*
+
 bin/configuration/*.log
