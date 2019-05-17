@@ -1,8 +1,10 @@
 package pl.edu.agh.iisg.ewolucja.operators.continuos;
 
 import pl.edu.agh.iisg.ewolucja.core.*;
+import pl.edu.agh.iisg.ewolucja.logger.Logger;
 import pl.edu.agh.iisg.ewolucja.operators.exceptions.MissingParameterException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -10,6 +12,7 @@ import java.util.Random;
 public class ProbabilitySelection implements Operator {
 
     private Integer individualsSelected;
+	 private Logger logger = new Logger();
 
     @Override
     public void initialize(Configuration configuration) {
@@ -22,6 +25,14 @@ public class ProbabilitySelection implements Operator {
 
     @Override
     public Population apply(Population population) {
+		 logger.startWork();
+		 try {
+			logger.log(population.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
         List<Individual> individuals = population.getIndividuals();
         List<Individual> selected = new ArrayList<>();
         Random rand = new Random();
@@ -36,6 +47,14 @@ public class ProbabilitySelection implements Operator {
             }
         }
         population.setIndividuals(selected);
+		
+		try {
+			logger.log(population.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		logger.endWork();
         return population;
     }
 

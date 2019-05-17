@@ -1,12 +1,15 @@
 package pl.edu.agh.iisg.ewolucja.operators.binary;
 
 import pl.edu.agh.iisg.ewolucja.core.*;
+import pl.edu.agh.iisg.ewolucja.logger.Logger;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 public class SumEvaluation implements Operator {
 
     private ProblemType type = ProblemType.BINARY;
+	 private Logger logger = new Logger();
 
     @Override
     public void initialize(Configuration configuration) {
@@ -15,7 +18,24 @@ public class SumEvaluation implements Operator {
 
     @Override
     public Population apply(Population population) {
+    	logger.startWork();
+		 try {
+			logger.log(population.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
         population.getIndividuals().forEach(this::updateFitness);
+
+		try {
+			logger.log(population.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		logger.endWork();
+		
         return population;
     }
 

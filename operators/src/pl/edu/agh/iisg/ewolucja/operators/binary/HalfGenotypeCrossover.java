@@ -1,6 +1,8 @@
 package pl.edu.agh.iisg.ewolucja.operators.binary;
 
+import java.io.IOException;
 import java.util.List;
+import pl.edu.agh.iisg.ewolucja.logger.*;
 
 import pl.edu.agh.iisg.ewolucja.core.*;
 import pl.edu.agh.iisg.ewolucja.operators.exceptions.MissingParameterException;
@@ -8,6 +10,7 @@ import pl.edu.agh.iisg.ewolucja.operators.exceptions.MissingParameterException;
 public class HalfGenotypeCrossover implements Operator {
 	 private ProblemType type = ProblemType.BINARY;
 	 private double crossoverProbability;
+	 private Logger logger = new Logger();
 
 	 @Override
 	 public void initialize(Configuration configuration) {
@@ -20,6 +23,14 @@ public class HalfGenotypeCrossover implements Operator {
 
 	 @Override
 	 public Population apply(Population population) {
+		 logger.startWork();
+		 try {
+			logger.log(population.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
 		List<Individual> individuals = population.getIndividuals();
 		int n = individuals.size();
 		
@@ -30,6 +41,14 @@ public class HalfGenotypeCrossover implements Operator {
 				}
 			}
 		}
+		
+		try {
+			logger.log(population.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		logger.endWork();
 
 	    return population;
 	 }

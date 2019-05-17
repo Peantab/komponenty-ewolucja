@@ -1,14 +1,17 @@
 package pl.edu.agh.iisg.ewolucja.operators.continuos;
 
 import pl.edu.agh.iisg.ewolucja.core.*;
+import pl.edu.agh.iisg.ewolucja.logger.Logger;
 import pl.edu.agh.iisg.ewolucja.operators.exceptions.MissingParameterException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AverageCrossover implements Operator {
 
     private ProblemType type = ProblemType.CONTINUOUS;
+	 private Logger logger = new Logger();
 
     @Override
     public void initialize(Configuration configuration) {
@@ -17,6 +20,14 @@ public class AverageCrossover implements Operator {
 
     @Override
     public Population apply(Population population) {
+		 logger.startWork();
+		 try {
+			logger.log(population.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
         List<Individual> crossed = new ArrayList<>();
         List<Individual> individuals = population.getIndividuals();
         for (int i=0;i<individuals.size() - 1 && crossed.size() < individuals.size();i++) {
@@ -25,6 +36,15 @@ public class AverageCrossover implements Operator {
             }
         }
         population.setIndividuals(crossed);
+		
+		try {
+			logger.log(population.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		logger.endWork();
+		
         return population;
     }
 

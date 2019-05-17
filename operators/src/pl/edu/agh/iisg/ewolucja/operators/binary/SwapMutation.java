@@ -1,13 +1,16 @@
 package pl.edu.agh.iisg.ewolucja.operators.binary;
 
+import java.io.IOException;
 import java.util.List;
 
 import pl.edu.agh.iisg.ewolucja.core.*;
+import pl.edu.agh.iisg.ewolucja.logger.Logger;
 import pl.edu.agh.iisg.ewolucja.operators.exceptions.MissingParameterException;
 
 public class SwapMutation implements Operator {
 	 private ProblemType type = ProblemType.BINARY;
 	 private double mutationProbability;
+	 private Logger logger = new Logger();
 
 	 @Override
 	 public void initialize(Configuration configuration) {
@@ -20,6 +23,14 @@ public class SwapMutation implements Operator {
 
 	 @Override
 	 public Population apply(Population population) {
+		 logger.startWork();
+		 try {
+			logger.log(population.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
 		List<Individual> individuals = population.getIndividuals();
 		int n = individuals.size();
 		
@@ -28,6 +39,14 @@ public class SwapMutation implements Operator {
 				this.mutate(individuals.get(i).getGenotype());
 			}
 		}
+
+		try {
+			logger.log(population.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		logger.endWork();
 
 	    return population;
 	 }
