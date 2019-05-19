@@ -1,26 +1,36 @@
 package pl.edu.agh.iisg.ewolucja.logger.schemes;
 
-import java.util.Map;
-
 public class GeneralLog extends AbstractLog {
     private long runId;
     private String caller;
-    private Map<String, String> providedFields;
+    private String providedJson;
 
     public GeneralLog(long runId, String caller, String json){
         this.runId = runId;
         this.caller = caller;
-//        Gson gson = new Gson();
-//        Type stringToStringMap = new TypeToken<Map<String, String>>() {}.getType();
-//        providedFields = gson.fromJson(json, stringToStringMap);
+        this.providedJson = json;
     }
 
     @Override
     public String getJson() {
-//        Map<String, String> map = new HashMap<>(providedFields);
-//        map.put(RUN_ID, String.valueOf(runId));
-//        map.put(CALLER, caller);
-        throw new RuntimeException("Not yet implemented");
+        String[] split = providedJson.split("\\{", 2);
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(split[0]);
+
+        stringBuilder.append("{\n");
+
+        stringBuilder.append(RUN_ID);
+        stringBuilder.append(": \"");
+        stringBuilder.append(runId);
+        stringBuilder.append("\",\n");
+
+        stringBuilder.append(CALLER);
+        stringBuilder.append(": \"");
+        stringBuilder.append(caller);
+        stringBuilder.append("\",\n");
+
+        stringBuilder.append(split[1]);
+        return stringBuilder.toString();
     }
 
     @Override

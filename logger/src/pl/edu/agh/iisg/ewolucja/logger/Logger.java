@@ -13,7 +13,6 @@ import java.time.Instant;
 
 public class Logger {
 	private final long runId;
-	private int sequenceNumber = 0;
 	private String caller;
 
 	public Logger() throws IOException{
@@ -45,17 +44,21 @@ public class Logger {
 	}
 
 	private void sendLog(AbstractLog log) throws IOException {
-		URL url = new URL("http://localhost:9200/" + log.getIndexName() + '/' + log.getIndexName() + '/' + runId + sequenceNumber++);
+		URL url = new URL("http://localhost:9200/" + log.getIndexName() + "/_doc");
 		HttpURLConnection con = (HttpURLConnection) url.openConnection();
 		con.setDoOutput(true);
-		con.setRequestMethod("PUT");
+		con.setRequestMethod("POST");
 		con.setRequestProperty("Content-Type", "application/json");
 		OutputStream os = con.getOutputStream();
-		System.out.println(log.getJson());
 		os.write(log.getJson().getBytes(StandardCharsets.UTF_8));
 		os.flush();
 		os.close();
 		con.connect();
+		int code = con.getResponseCode();
+		if (code < 200 || code >= 300){
+			con.disconnect();
+			throw new RuntimeException("ElasticSearch returned code: " + code);
+		}
 //		FOR DEBUG:
 //		System.out.println(con.getResponseCode());
 //		byte[] bajty = new byte[1000];
