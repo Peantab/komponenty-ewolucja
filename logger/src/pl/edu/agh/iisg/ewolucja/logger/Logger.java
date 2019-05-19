@@ -1,27 +1,24 @@
 package pl.edu.agh.iisg.ewolucja.logger;
 
-import org.apache.http.HttpHost;
-import org.elasticsearch.action.index.IndexRequest;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestClient;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.common.xcontent.XContentType;
 import pl.edu.agh.iisg.ewolucja.logger.schemes.AbstractLog;
 import pl.edu.agh.iisg.ewolucja.logger.schemes.GeneralLog;
 import pl.edu.agh.iisg.ewolucja.logger.schemes.LifecycleLog;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 
 public class Logger {
 	private final long runId;
+	private int sequenceNumber = 0;
 	private String caller;
-	private final RestHighLevelClient client;
 
 	public Logger() throws IOException{
 		runId = Instant.now().toEpochMilli();
 		caller = new Exception().getStackTrace()[1].getClassName();
-		client = new RestHighLevelClient(RestClient.builder(new HttpHost("localhost", 9200, "http")));
 		LifecycleLog lifecycleLog = new LifecycleLog(runId, caller, LifecycleLog.LifecycleState.START_WORK);
 		sendLog(lifecycleLog);
 		System.out.println("Started mock logger.");
@@ -47,9 +44,23 @@ public class Logger {
 		System.out.println("Mock-logged: " + a + b + c);
 	}
 
-	private void sendLog(AbstractLog log) throws IOException{
-		IndexRequest request = new IndexRequest(log.getIndexName());
-		request.source(log.getMap(), XContentType.JSON);
-		client.index(request, RequestOptions.DEFAULT);
+	private void sendLog(AbstractLog log) throws IOException {
+		URL url = new URL("http://localhost:9200/" + log.getIndexName() + '/' + log.getIndexName() + '/' + runId + sequenceNumber++);
+		HttpURLConnection con = (HttpURLConnection) url.openConnection();
+		con.setDoOutput(true);
+		con.setRequestMethod("PUT");
+		con.setRequestProperty("Content-Type", "application/json");
+		OutputStream os = con.getOutputStream();
+		System.out.println(log.getJson());
+		os.write(log.getJson().getBytes(StandardCharsets.UTF_8));
+		os.flush();
+		os.close();
+		con.connect();
+//		FOR DEBUG:
+//		System.out.println(con.getResponseCode());
+//		byte[] bajty = new byte[1000];
+//		con.getInputStream().read(bajty);
+//		System.out.println(new String(bajty));
+		con.disconnect();
 	}
 }

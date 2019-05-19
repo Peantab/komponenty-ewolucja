@@ -1,14 +1,11 @@
 package pl.edu.agh.iisg.ewolucja.logger.schemes;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class LifecycleLog extends AbstractLog {
     private long runId;
     private String caller;
     private LifecycleState newState;
 
-    private final String NEW_STATE = "newState";
+    private final String NEW_STATE = "\"newState\"";
 
     public LifecycleLog(long runId, String caller, LifecycleState newState){
         this.runId = runId;
@@ -17,23 +14,39 @@ public class LifecycleLog extends AbstractLog {
     }
 
     @Override
-    public Map<String, String> getMap() {
-        Map<String, String> map = new HashMap<>();
-        map.put(RUN_ID, String.valueOf(runId));
-        map.put(CALLER, caller);
-        map.put(NEW_STATE, newState.getDescription());
-        return map;
+    public String getJson() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("{\n");
+
+        stringBuilder.append(RUN_ID);
+        stringBuilder.append(": \"");
+        stringBuilder.append(runId);
+        stringBuilder.append("\",\n");
+
+        stringBuilder.append(CALLER);
+        stringBuilder.append(": \"");
+        stringBuilder.append(caller);
+        stringBuilder.append("\",\n");
+
+        stringBuilder.append(NEW_STATE);
+        stringBuilder.append(": ");
+        stringBuilder.append(newState.getDescription());
+        stringBuilder.append('\n');
+
+        stringBuilder.append("}\n");
+
+        return stringBuilder.toString();
     }
 
     @Override
     public String getIndexName() {
-        return "lifecycleLogs";
+        return "lifecycle";
     }
 
     public enum LifecycleState{
-        START_WORK("startWork"),
-        END_WORK("endWork"),
-        TAKE_OVER_WORK("takeOverWork");
+        START_WORK("\"startWork\""),
+        END_WORK("\"endWork\""),
+        TAKE_OVER_WORK("\"takeOverWork\"");
 
         private final String description;
 
