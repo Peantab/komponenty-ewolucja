@@ -11,6 +11,7 @@ public class LifecycleLog extends AbstractLog {
         this.runId = runId;
         this.caller = caller;
         this.newState = newState;
+        generateTimestamp();
     }
 
     @Override
@@ -26,6 +27,11 @@ public class LifecycleLog extends AbstractLog {
         stringBuilder.append(CALLER);
         stringBuilder.append(": \"");
         stringBuilder.append(caller);
+        stringBuilder.append("\",\n");
+
+        stringBuilder.append(TIMESTAMP);
+        stringBuilder.append(": \"");
+        stringBuilder.append(timestamp);
         stringBuilder.append("\",\n");
 
         stringBuilder.append(NEW_STATE);

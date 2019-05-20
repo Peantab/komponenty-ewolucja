@@ -9,6 +9,7 @@ public class GeneralLog extends AbstractLog {
         this.runId = runId;
         this.caller = caller;
         this.providedJson = json;
+        generateTimestamp();
     }
 
     @Override
@@ -27,6 +28,11 @@ public class GeneralLog extends AbstractLog {
         stringBuilder.append(CALLER);
         stringBuilder.append(": \"");
         stringBuilder.append(caller);
+        stringBuilder.append("\",\n");
+
+        stringBuilder.append(TIMESTAMP);
+        stringBuilder.append(": \"");
+        stringBuilder.append(timestamp);
         stringBuilder.append("\",\n");
 
         stringBuilder.append(split[1]);
