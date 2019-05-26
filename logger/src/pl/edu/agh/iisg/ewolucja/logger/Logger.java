@@ -36,6 +36,7 @@ public class Logger {
 
 	public void log(String json) throws IOException {
 		GeneralLog generalLog = new GeneralLog(runId, caller, json);
+		System.out.print("[LOG]"+generalLog.getJson());
 		sendLog(generalLog);
 	}
 
