@@ -3,6 +3,7 @@ package pl.edu.agh.iisg.ewolucja.logger;
 import pl.edu.agh.iisg.ewolucja.logger.schemes.AbstractLog;
 import pl.edu.agh.iisg.ewolucja.logger.schemes.GeneralLog;
 import pl.edu.agh.iisg.ewolucja.logger.schemes.LifecycleLog;
+import pl.edu.agh.iisg.ewolucja.logger.schemes.MapBasedLog;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -10,6 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
+import java.util.Map;
 
 public class Logger {
 	private final long runId;
@@ -20,7 +22,6 @@ public class Logger {
 		caller = new Exception().getStackTrace()[1].getClassName();
 		LifecycleLog lifecycleLog = new LifecycleLog(runId, caller, LifecycleLog.LifecycleState.START_WORK);
 		sendLog(lifecycleLog);
-		System.out.println("Started mock logger.");
 	}
 	
 	public void startWork() throws IOException {
@@ -36,12 +37,12 @@ public class Logger {
 
 	public void log(String json) throws IOException {
 		GeneralLog generalLog = new GeneralLog(runId, caller, json);
-		System.out.print("[LOG]"+generalLog.getJson());
 		sendLog(generalLog);
 	}
 
-	public void logStructured(int a, int b, int c) {
-		System.out.println("Mock-logged: " + a + b + c);
+	public void log(Map<String, String> entries) throws IOException {
+		MapBasedLog mapBasedLog = new MapBasedLog(runId, caller, entries);
+		sendLog(mapBasedLog);
 	}
 
 	private void sendLog(AbstractLog log) throws IOException {
@@ -66,5 +67,12 @@ public class Logger {
 //		con.getInputStream().read(bajty);
 //		System.out.println(new String(bajty));
 		con.disconnect();
+		printLog(log);
+	}
+
+	private void printLog(AbstractLog log){
+		Instant timestamp = Instant.ofEpochMilli(log.getTimestamp());
+		String headers = "[" + timestamp.toString() + "][" + log.getIndexName() + "]";
+		System.out.print(headers + " " + log.getJson().replace("\n", " ") + "\n");
 	}
 }

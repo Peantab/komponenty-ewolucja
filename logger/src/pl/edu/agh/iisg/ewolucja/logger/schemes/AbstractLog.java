@@ -15,4 +15,8 @@ public abstract class AbstractLog {
     void generateTimestamp(){
         this.timestamp = Instant.now().toEpochMilli();
     }
+
+    public long getTimestamp(){
+        return timestamp;
+    }
 }
