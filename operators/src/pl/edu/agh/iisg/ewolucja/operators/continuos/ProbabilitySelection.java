@@ -12,7 +12,7 @@ import java.util.Random;
 public class ProbabilitySelection implements Operator {
 
     private Integer individualsSelected;
-	 private Logger logger = new Logger();
+	 private Logger logger;
 
     @Override
     public void initialize(Configuration configuration) {
@@ -21,17 +21,23 @@ public class ProbabilitySelection implements Operator {
             throw new MissingParameterException("individuals.selected");
         }
         this.individualsSelected = indSel;
+        try {
+            this.logger = new Logger();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Exception occurred while initializing logger");
+        }
     }
 
     @Override
     public Population apply(Population population) {
-		 logger.startWork();
-		 try {
-			logger.log(population.toString());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        try {
+            logger.startWork();
+            logger.log(population.toString());
+        } catch (IOException e) {
+            System.out.println("Exception during logging process");
+            e.printStackTrace();
+        }
 		 
         List<Individual> individuals = population.getIndividuals();
         List<Individual> selected = new ArrayList<>();
@@ -47,14 +53,14 @@ public class ProbabilitySelection implements Operator {
             }
         }
         population.setIndividuals(selected);
-		
-		try {
-			logger.log(population.toString());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		logger.endWork();
+
+        try {
+            logger.log(population.toString());
+            logger.endWork();
+        } catch (IOException e) {
+            System.out.println("Exception during logging process");
+            e.printStackTrace();
+        }
         return population;
     }
 

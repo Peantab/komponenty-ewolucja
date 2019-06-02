@@ -10,7 +10,7 @@ import pl.edu.agh.iisg.ewolucja.operators.exceptions.MissingParameterException;
 public class SwapMutation implements Operator {
 	 private ProblemType type = ProblemType.BINARY;
 	 private double mutationProbability;
-	 private Logger logger = new Logger();
+	 private Logger logger;
 
 	 @Override
 	 public void initialize(Configuration configuration) {
@@ -19,17 +19,23 @@ public class SwapMutation implements Operator {
 	        throw new MissingParameterException("problem.mutationProbability");
 	     }
 	     this.mutationProbability = mutationProbability;
+		 try {
+			 this.logger = new Logger();
+		 } catch (IOException e) {
+			 e.printStackTrace();
+			 System.out.println("Exception occurred while initializing logger");
+		 }
 	 }
 
 	 @Override
 	 public Population apply(Population population) {
-		 logger.startWork();
 		 try {
-			logger.log(population.toString());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			 logger.startWork();
+			 logger.log(population.toString());
+		 } catch (IOException e) {
+			 System.out.println("Exception during logging process");
+			 e.printStackTrace();
+		 }
 		 
 		List<Individual> individuals = population.getIndividuals();
 		int n = individuals.size();
@@ -40,13 +46,13 @@ public class SwapMutation implements Operator {
 			}
 		}
 
-		try {
-			logger.log(population.toString());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		logger.endWork();
+		 try {
+			 logger.log(population.toString());
+			 logger.endWork();
+		 } catch (IOException e) {
+			 System.out.println("Exception during logging process");
+			 e.printStackTrace();
+		 }
 
 	    return population;
 	 }

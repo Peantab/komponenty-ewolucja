@@ -13,7 +13,7 @@ public class RandomInitialization implements Operator {
 	private int genotypeSize;
 	private ProblemType type = ProblemType.CONTINUOUS;
 	private Random random = new Random();
-	 private Logger logger = new Logger();
+	 private Logger logger;
 
 	private RandomInitialization(int populationSize, int genotypeSize) {
 		this.populationSize = populationSize;
@@ -32,29 +32,36 @@ public class RandomInitialization implements Operator {
 		}
 		this.populationSize = popSize;
 		this.genotypeSize = genSize;
+		try {
+			this.logger = new Logger();
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("Exception occurred while initializing logger");
+		}
 	}
 
 	@Override
 	public Population apply(Population population) {
-		 logger.startWork();
-		 try {
+		try {
+			logger.startWork();
 			logger.log(population.toString());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			System.out.println("Exception during logging process");
 			e.printStackTrace();
 		}
 		 
 		for (int i = 0; i < populationSize - population.getIndividuals().size(); i++) {
 			population.getIndividuals().add(new Individual(getRandomGenotype()));
 		}
-		
+
 		try {
 			logger.log(population.toString());
+			logger.endWork();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			System.out.println("Exception during logging process");
 			e.printStackTrace();
 		}
-		logger.endWork();
+
 		return population;
 	}
 

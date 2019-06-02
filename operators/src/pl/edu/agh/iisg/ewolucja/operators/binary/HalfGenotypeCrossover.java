@@ -10,7 +10,7 @@ import pl.edu.agh.iisg.ewolucja.operators.exceptions.MissingParameterException;
 public class HalfGenotypeCrossover implements Operator {
 	 private ProblemType type = ProblemType.BINARY;
 	 private double crossoverProbability;
-	 private Logger logger = new Logger();
+	 private Logger logger;
 
 	 @Override
 	 public void initialize(Configuration configuration) {
@@ -19,15 +19,21 @@ public class HalfGenotypeCrossover implements Operator {
 	        throw new MissingParameterException("problem.crossoverProbability");
 	     }
 	     this.crossoverProbability = crossoverProbability;
+		 try {
+			 this.logger = new Logger();
+		 } catch (IOException e) {
+			 e.printStackTrace();
+			 System.out.println("Exception occurred while initializing logger");
+		 }
 	 }
 
 	 @Override
 	 public Population apply(Population population) {
-		 logger.startWork();
-		 try {
+	 	try {
+		 	logger.startWork();
 			logger.log(population.toString());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			System.out.println("Exception during logging process");
 			e.printStackTrace();
 		}
 		 
@@ -44,11 +50,11 @@ public class HalfGenotypeCrossover implements Operator {
 		
 		try {
 			logger.log(population.toString());
+			logger.endWork();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			System.out.println("Exception during logging process");
 			e.printStackTrace();
 		}
-		logger.endWork();
 
 	    return population;
 	 }

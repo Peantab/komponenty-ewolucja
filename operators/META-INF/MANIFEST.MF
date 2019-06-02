@@ -5,6 +5,5 @@ Bundle-SymbolicName: Operators
 Bundle-Version: 1.0.0.qualifier
 Automatic-Module-Name: Operators
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Import-Package: org.osgi.framework;version="1.3.0",pl.edu.agh.iisg.ewolucja.core
+Import-Package: pl.edu.agh.iisg.ewolucja.core,pl.edu.agh.iisg.ewolucja.logger
 Export-Package: pl.edu.agh.iisg.ewolucja.operators
-Bundle-ActivationPolicy: lazy
