@@ -15,7 +15,7 @@ import java.util.List;
 
 
 public class LogReader {
-    public List<String> getLogs(int run_id, String indexName) throws IOException {
+    public List<String> getLogs(long run_id, String indexName) throws IOException {
         URL url = new URL("http://localhost:9200/" + indexName + "/_search");
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
@@ -42,7 +42,7 @@ public class LogReader {
         return null;
     }
 
-    public String buildJson(int run_id){
+    public String buildJson(long run_id){
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append("{\n");
@@ -62,7 +62,7 @@ public class LogReader {
         return stringBuilder.toString();
     }
 
-    public String buildJson(int run_id, int count){
+    public String buildJson(long run_id, int count){
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append("{");
@@ -86,7 +86,7 @@ public class LogReader {
         return stringBuilder.toString();
     }
 
-    public String buildJson(int run_id, String timeFrom, String timeTo){
+    public String buildJson(long run_id, String timeFrom, String timeTo){
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append("{");
@@ -128,7 +128,7 @@ public class LogReader {
         }
     }
 
-    public List<String> getLastLogs(int count, String indexName, int run_id) throws IOException {
+    public List<String> getLastLogs(int count, String indexName, long run_id) throws IOException {
         URL url = new URL("http://localhost:9200/" + indexName + "/_search");
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);

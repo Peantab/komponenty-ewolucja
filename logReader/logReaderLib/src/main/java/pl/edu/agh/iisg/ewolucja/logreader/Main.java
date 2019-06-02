@@ -20,7 +20,7 @@ public class Main {
             if(functionName.equals("getLogs")){
                 System.out.print("Enter run_id: ");
                 String run_id = scanner.next();
-                int id = Integer.parseInt(run_id);
+                long id = Long.parseLong(run_id);
                 System.out.print("Enter index_name: ");
                 String index_name = scanner.next();
                 logReader.getLogs(id, index_name);
@@ -28,7 +28,7 @@ public class Main {
             }else if(functionName.equals("getLastLogs")){
                 System.out.print("Enter run_id: ");
                 String run_id = scanner.next();
-                int id = Integer.parseInt(run_id);
+                long id = Long.parseLong(run_id);
                 System.out.print("Enter index_name: ");
                 String index_name = scanner.next();
                 System.out.print("Enter number_of_logs: ");
