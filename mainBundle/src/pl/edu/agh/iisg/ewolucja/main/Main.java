@@ -31,7 +31,7 @@ public class Main implements BundleActivator {
         configMap.put("individuals.selected", 4);
         configMap.put("problem.crossoverProbability", 0.4);
         configMap.put("population.size", 8);
-        configMap.put("genotype.size", 2);
+        configMap.put("genotype.size", this.genotypeSize);
         configMap.put("problem.mutationProbability", 0.1);
 
         this.configuration = new Configuration(configMap);
