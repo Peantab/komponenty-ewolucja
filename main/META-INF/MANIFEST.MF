@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: Main
-Bundle-SymbolicName: Main
-Bundle-Version: 1.0.0.qualifier
-Automatic-Module-Name: Main
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Import-Package: org.osgi.framework,pl.edu.agh.iisg.ewolucja.core
-

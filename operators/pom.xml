@@ -31,13 +31,13 @@
             <groupId>pl.edu.agh.iisg.ewolucja</groupId>
             <artifactId>Core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>pl.edu.agh.iisg.ewolucja</groupId>
             <artifactId>Logger</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

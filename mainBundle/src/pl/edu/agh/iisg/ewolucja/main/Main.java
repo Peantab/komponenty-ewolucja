@@ -6,7 +6,6 @@ import org.osgi.framework.BundleContext;
 import pl.edu.agh.iisg.ewolucja.core.*;
 import pl.edu.agh.iisg.ewolucja.operators.binary.*;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -87,20 +86,16 @@ public class Main implements BundleActivator {
     private void runBinaryOperator(String name) {
         switch (name){
             case "SumEvaluation":
-                try {
-                    SumEvaluation sumEvaluation = new SumEvaluation();
-                    sumEvaluation.initialize(configuration);
-                    sumEvaluation.apply(population);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                Operator sumEvaluation = new SumEvaluation();
+                sumEvaluation.initialize(configuration);
+                sumEvaluation.apply(population);
                 break;
             case "HalfGenotypeCrossover":
                 try {
                     HalfGenotypeCrossover halfGenotypeCrossover = new HalfGenotypeCrossover();
                     halfGenotypeCrossover.initialize(configuration);
                     halfGenotypeCrossover.apply(population);
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 break;
@@ -109,17 +104,16 @@ public class Main implements BundleActivator {
                     HighestFitnessSelection highestFitnessSelection = new HighestFitnessSelection();
                     highestFitnessSelection.initialize(configuration);
                     highestFitnessSelection.apply(population);
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 break;
             case "RandomInitialization":
                 try {
-                    int populationSize = (int) configuration.getParameter("population.size");
-                    RandomInitialization randomInitialization = new RandomInitialization(populationSize, genotypeSize);
+                    RandomInitialization randomInitialization = new RandomInitialization();
                     randomInitialization.initialize(configuration);
                     randomInitialization.apply(population);
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 break;
@@ -128,7 +122,7 @@ public class Main implements BundleActivator {
                     SwapMutation swapMutation = new SwapMutation();
                     swapMutation.initialize(configuration);
                     swapMutation.apply(population);
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 break;
@@ -172,9 +166,11 @@ public class Main implements BundleActivator {
         this.iterations = 1;
         this.genotypeSize = 1;
         configInit();
+        System.out.println("Config done");
         populationInit();
+        System.out.println("population done");
         step(problemType, iterations);
-    }
+}
 
     @Override
     public void stop(BundleContext bundleContext) throws Exception {
