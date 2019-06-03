@@ -2,6 +2,7 @@ package pl.edu.agh.iisg.ewolucja.main;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import pl.edu.agh.iisg.ewolucja.core.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;

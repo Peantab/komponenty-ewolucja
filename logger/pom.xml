@@ -24,6 +24,7 @@
         </configuration>
       </plugin>
     </plugins>
+    <finalName>Logger</finalName>
   </build>
   <dependencies>
   </dependencies>

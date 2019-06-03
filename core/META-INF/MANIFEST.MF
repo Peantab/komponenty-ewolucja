@@ -5,5 +5,5 @@ Bundle-SymbolicName: Core
 Bundle-Version: 1.0.0.qualifier
 Automatic-Module-Name: Core
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Import-Package: com.google.gson
+Import-Package: org.json
 Export-Package: pl.edu.agh.iisg.ewolucja.core

@@ -1,13 +1,19 @@
 package pl.edu.agh.iisg.ewolucja.core;
 
+import java.util.ArrayList;
 import java.util.List;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class Population {
 	
 	private int generation;
 	private List<Individual> individuals;
+
+	public Population() {
+		this.generation = 0;
+		this.individuals = new ArrayList<>();
+	}
 
 	public List<Individual> getIndividuals() {
 		return individuals;
@@ -26,27 +32,27 @@ public class Population {
 	}
 	
 	public String toString() {
-		JsonObject populationJsonObject = new JsonObject();
-		JsonArray individualsJsonArray = new JsonArray();
+		JSONObject populationJsonObject = new JSONObject();
+		JSONArray individualsJsonArray = new JSONArray();
 
 		for (int i = 0; i < individuals.size(); i++) {
 			Individual individual = individuals.get(i);
 			Gene[] genotype = individual.getGenotype();
-			JsonObject individualJsonObject = new JsonObject();
-			JsonArray genotypeJsonArray = new JsonArray();
+			JSONObject individualJsonObject = new JSONObject();
+			JSONArray genotypeJsonArray = new JSONArray();
 
 			for (int j = 0; j < genotype.length; j++) {
-				genotypeJsonArray.add(genotype[j].getValue());
+				genotypeJsonArray.put(genotype[j].getValue());
 			}
 
-			individualJsonObject.addProperty("fitness", individual.getFitness());
-			individualJsonObject.add("genotype", genotypeJsonArray);
+			individualJsonObject.put("fitness", individual.getFitness());
+			individualJsonObject.put("genotype", genotypeJsonArray);
 
-			individualsJsonArray.add(individualJsonObject);
+			individualsJsonArray.put(individualJsonObject);
 		}
 
-		populationJsonObject.addProperty("generation", generation);
-		populationJsonObject.add("individuals", individualsJsonArray);
+		populationJsonObject.put("generation", generation);
+		populationJsonObject.put("individuals", individualsJsonArray);
 
 		return populationJsonObject.toString();
 	}
