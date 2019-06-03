@@ -20,6 +20,7 @@ public class Main implements BundleActivator {
     private Population population;
     private int genotypeSize;
     private String[] steps = {"SumEvaluation", "HalfGenotypeCrossover", "HighestFitnessSelection", "RandomInitialization", "SwapMutation"};
+//    private String[] steps = {"NormalizedSumEvaluation", "AverageCrossover", "ProbabilitySelection", "RandomInitialization", "PermutationMutation"};
 
     public Main() {
     }
@@ -131,15 +132,46 @@ public class Main implements BundleActivator {
 
     private void runContinousOperator(String name) {
         switch (name){
-            case "INITIATION":
+            case "NormalizedSumEvaluation":
+                NormalizedSumEvaluation normalizedSumEvaluation = new NormalizedSumEvaluation();
+                normalizedSumEvaluation.initialize(configuration);
+                normalizedSumEvaluation.apply(population);
                 break;
-            case "EVALUATION":
+            case "AverageCrossover":
+                try {
+                    AverageCrossover averageCrossover = new AverageCrossover();
+                    averageCrossover.initialize(configuration);
+                    averageCrossover.apply(population);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
-            case "SELECTION":
+            case "ProbabilitySelection":
+                try {
+                    ProbabilitySelection probabilitySelection = new ProbabilitySelection();
+                    probabilitySelection.initialize(configuration);
+                    probabilitySelection.apply(population);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
-            case "CROSSING":
+            case "RandomInitialization":
+                try {
+                    RandomInitialization randomInitialization = new RandomInitialization();
+                    randomInitialization.initialize(configuration);
+                    randomInitialization.apply(population);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
-            case "MUTATION":
+            case "PermutationMutation":
+                try {
+                    PermutationMutation permutationMutation = new PermutationMutation();
+                    permutationMutation.initialize(configuration);
+                    permutationMutation.apply(population);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
         }
     }
